@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+
+<body>
+    <h1>Login Page</h1>
+    <form id="loginForm">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const url = 'https://mymusicpupu.000webhostapp.com/server2/login.php';
+            const data = { username, password };
+
+            const fetchData = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            };
+
+            try {
+                const response = await fetch(url, fetchData);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const responseData = await response.json();
+                console.log('Response:', responseData);
+
+                // Chuyển hướng sang trang home.htm nếu đăng nhập thành công
+                window.location.href = 'https://mymusicpupu.000webhostapp.com/web/home.html';
+            } catch (error) {
+                console.error('There was a problem with your fetch operation:', error);
+            }
+        });
+
+    </script>
+</body>
+
+</html>

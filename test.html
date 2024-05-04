@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin dịch vụ</title>
+</head>
+
+<body>
+
+    <h1>Danh sách dịch vụ</h1>
+
+    <ul id="service-list"></ul>
+
+    <script>
+        // Lấy dữ liệu từ API bằng phương thức GET
+        fetch('https://mymusicpupu.000webhostapp.com/server2/getListDV.php')
+            .then(response => response.json())
+            .then(data => {
+                const serviceList = document.getElementById('service-list');
+
+                // Lặp qua mỗi dịch vụ và hiển thị thông tin
+                data.forEach(service => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+        <h2>${service.TenDV}</h2>
+        <p><strong>Giá:</strong> ${service.Gia}</p>
+        <p><strong>Mô tả:</strong> ${service.Mota}</p>
+        <img src="${service.HinhAnh}" alt="${service.TenDV}" style="max-width: 200px;">
+      `;
+                    serviceList.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('Có lỗi xảy ra:', error);
+            });
+    </script>
+
+</body>
+
+</html>
